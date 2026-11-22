@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <!-- Outer chip pins -->
+  <path d="M12 4v4M18 4v4M24 4v4M30 4v4M36 4v4" stroke="#4D7C58" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M12 40v4M18 40v4M24 40v4M30 40v4M36 40v4" stroke="#4D7C58" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M4 12h4M4 18h4M4 24h4M4 30h4M4 36h4" stroke="#4D7C58" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M40 12h4M40 18h4M40 24h4M40 30h4M40 36h4" stroke="#4D7C58" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Chip Body -->
+  <rect x="8" y="8" width="32" height="32" rx="7" fill="#FFFFFF" stroke="#3F6748" stroke-width="2.5"/>
+  <rect x="12" y="12" width="24" height="24" rx="4" fill="#F4F7F4" stroke="#CEE0D2" stroke-width="1.2"/>
+  
+  <!-- Corner nodes -->
+  <circle cx="15" cy="15" r="1.5" fill="#4D7C58" />
+  <circle cx="33" cy="15" r="1.5" fill="#4D7C58" />
+  <circle cx="15" cy="33" r="1.5" fill="#4D7C58" />
+  <circle cx="33" cy="33" r="1.5" fill="#4D7C58" />
+  
+  <!-- Stylized letter V with digital apex -->
+  <path d="M17 18L24 30L31 18" stroke="#1F3325" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="24" cy="30" r="2" fill="#4D7C58" />
+</svg>

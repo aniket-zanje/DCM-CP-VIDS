@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --color-vids-ivory: #FAF9F5;
+  --color-vids-ivory-warm: #F7F5EE;
+  --color-vids-sand: #F4EDE4;
+  --color-vids-sand-border: #E8DED2;
+  --color-vids-sand-text: #4A3A2A;
+  --color-vids-border: #E8EDE8;
+  --color-vids-charcoal-900: #141E18;
+  --color-vids-charcoal-800: #1E2B23;
+  --color-vids-charcoal-700: #2F3E34;
+  --color-vids-charcoal-600: #4B5B51;
+  --color-vids-charcoal-500: #6D7E73;
+  --color-vids-charcoal-400: #96A59C;
+  --color-vids-charcoal-300: #C2CEC6;
+  --color-vids-sage-50: #F3F8F4;
+  --color-vids-sage-100: #E4F0E7;
+  --color-vids-sage-200: #C9E2CE;
+  --color-vids-sage-300: #A2CFA9;
+  --color-vids-sage-400: #7CB886;
+  --color-vids-sage-500: #467652;
+  --color-vids-sage-600: #386641;
+  --color-vids-sage-700: #2C5234;
+  --color-vids-sage-800: #213E27;
+  --color-vids-sage-900: #172C1C;
+}
+
+body {
+  background-color: #FAF9F5;
+  color: #141E18;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Engineering blueprint dot pattern */
+.bg-grid-blueprint {
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(44, 82, 52, 0.08) 1.2px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Engineering grid cross-lines */
+.bg-grid-lines {
+  background-image: 
+    linear-gradient(to right, rgba(44, 82, 52, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(44, 82, 52, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Pulsing animated electrical current wires */
+@keyframes wirePulse {
+  0% {
+    stroke-dashoffset: 28;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.wire-active {
+  stroke: #16A34A !important;
+  stroke-dasharray: 7 3.5;
+  animation: wirePulse 1s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(22, 163, 74, 0.8));
+}
+
+.wire-amber {
+  stroke: #D97706 !important;
+  stroke-dasharray: 7 3.5;
+  animation: wirePulse 1s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(217, 119, 6, 0.8));
+}
+
+.wire-inactive {
+  stroke: #CBD5E1 !important;
+}
+
+/* 3D circuit board floating slab effect */
+.board-3d-container {
+  perspective: 1200px;
+}
+
+.board-3d-base {
+  border-radius: 2.25rem;
+  background: linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 50%, #34D399 100%);
+  box-shadow: 
+    0 24px 48px -12px rgba(16, 185, 129, 0.25),
+    0 12px 24px -6px rgba(44, 82, 52, 0.12),
+    0 0 0 1px rgba(52, 211, 153, 0.4);
+}
+
+.board-3d-top {
+  border-radius: 2.1rem;
+  background: #FFFFFF;
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.95),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.03),
+    0 6px 16px -2px rgba(20, 30, 24, 0.08);
+}
+
+/* Smooth claymorphic card shadow */
+.shadow-soft-card {
+  box-shadow: 
+    0 4px 20px -2px rgba(20, 30, 24, 0.04),
+    0 1px 3px rgba(20, 30, 24, 0.02);
+}
+
+.shadow-soft-card-hover {
+  box-shadow: 
+    0 16px 36px -4px rgba(20, 30, 24, 0.08),
+    0 4px 12px -2px rgba(20, 30, 24, 0.03);
+}
+
+/* LED glow effects */
+.glow-green-led {
+  filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.9)) drop-shadow(0 0 24px rgba(34, 197, 94, 0.45));
+}
+
+.glow-amber-led {
+  filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.9)) drop-shadow(0 0 24px rgba(245, 158, 11, 0.45));
+}
