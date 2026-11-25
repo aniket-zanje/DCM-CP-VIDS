@@ -1,36 +1,49 @@
-import React, { useState, useRef } from 'react';
-import { 
-  Cpu, 
-  Maximize2, 
-  Minimize2, 
-  RotateCcw, 
-  Sparkles, 
-  ExternalLink, 
-  HelpCircle, 
-  Sliders, 
-  Layers, 
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Cpu,
+  Maximize2,
+  Minimize2,
+  RotateCcw,
+  HelpCircle,
   Zap,
-  Info,
-  CheckCircle2
+  CheckCircle2,
 } from 'lucide-react';
+
+/* Where the simulator page is served from.
+   Dev and production must both answer at this address (see vercel.json).
+   To point somewhere else without editing code, set VITE_SIM_URL in your env. */
+const SIM_SRC = import.meta.env?.VITE_SIM_URL || '/circuitverse-simulator';
 
 export const SimulationWorkbench = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [iframeKey, setIframeKey] = useState(0);
   const [showTips, setShowTips] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const containerRef = useRef(null);
 
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
-  };
+  const toggleFullscreen = () => setIsFullscreen((v) => !v);
 
   const handleReset = () => {
-    setIframeKey(prev => prev + 1);
+    setLoaded(false);
+    setIframeKey((prev) => prev + 1);
   };
+
+  /* Esc leaves fullscreen, and the page behind does not scroll while it is open */
+  useEffect(() => {
+    if (!isFullscreen) return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') setIsFullscreen(false); };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isFullscreen]);
 
   return (
     <section id="simulation-workbench" className="py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
-      
+
       {/* Studio Section Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-8">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF6F0] border border-[#E8DED2] shadow-xs text-xs font-bold text-[#4A3A2A]">
@@ -49,18 +62,17 @@ export const SimulationWorkbench = () => {
       </div>
 
       {/* Main Studio Frame Container */}
-      <div 
+      <div
         ref={containerRef}
         className={`bg-white rounded-3xl border border-[#E2EBE5] shadow-[0_16px_40px_-8px_rgba(20,30,24,0.08)] overflow-hidden transition-all duration-300 ${
-          isFullscreen 
-            ? 'fixed inset-0 z-50 rounded-none border-none h-screen w-screen' 
+          isFullscreen
+            ? 'fixed inset-0 z-50 rounded-none border-none h-screen w-screen'
             : 'relative'
         }`}
       >
-        {/* VIDS Studio Custom Top Bar (Gives it a 100% proprietary native feel) */}
+        {/* Studio top bar */}
         <div className="bg-[#FAF9F5] border-b border-[#E2EBE5] px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3 select-none">
-          
-          {/* Left: Workbench Info & Status */}
+
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-[#E4F0E7] text-[#2C5234] flex items-center justify-center font-bold text-xs shadow-xs">
               <Zap className="w-4 h-4 text-[#386641]" />
@@ -68,11 +80,11 @@ export const SimulationWorkbench = () => {
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-xs sm:text-sm text-[#141E18]">
-                  VIDS Digital Simulator v2.4
+                  VIDS Digital Simulator
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100/90 text-emerald-800 text-[10px] font-bold">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Live Engine Active
+                  Live
                 </span>
               </div>
               <p className="text-[10px] text-[#6D7E73] font-medium hidden sm:block">
@@ -81,11 +93,9 @@ export const SimulationWorkbench = () => {
             </div>
           </div>
 
-          {/* Right: Studio Controls */}
           <div className="flex items-center gap-2">
-            
-            {/* Quick Tips Toggle */}
             <button
+              type="button"
               onClick={() => setShowTips(!showTips)}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border cursor-pointer ${
                 showTips
@@ -97,8 +107,8 @@ export const SimulationWorkbench = () => {
               <span className="hidden sm:inline">Lab Tips</span>
             </button>
 
-            {/* Reset Canvas Button */}
             <button
+              type="button"
               onClick={handleReset}
               title="Reload Simulator Canvas"
               className="px-3 py-1.5 rounded-xl bg-white hover:bg-[#FAF9F5] text-[#4B5B51] hover:text-[#141E18] text-xs font-bold border border-[#E2EBE5] transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
@@ -107,10 +117,10 @@ export const SimulationWorkbench = () => {
               <span className="hidden sm:inline">Reset</span>
             </button>
 
-            {/* Fullscreen Toggle */}
             <button
+              type="button"
               onClick={toggleFullscreen}
-              title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Workbench"}
+              title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen Workbench'}
               className="px-3.5 py-1.5 rounded-xl bg-[#386641] hover:bg-[#2C5234] text-white text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
             >
               {isFullscreen ? (
@@ -125,13 +135,12 @@ export const SimulationWorkbench = () => {
                 </>
               )}
             </button>
-
           </div>
         </div>
 
         {/* Collapsible Lab Tips Banner */}
         {showTips && (
-          <div className="bg-[#FAF6F0] border-b border-[#E8DED2] p-4 text-xs text-[#4A3A2A] animate-in slide-in-from-top-2 duration-150">
+          <div className="bg-[#FAF6F0] border-b border-[#E8DED2] p-4 text-xs text-[#4A3A2A]">
             <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-[#386641] shrink-0 mt-0.5" />
@@ -164,17 +173,23 @@ export const SimulationWorkbench = () => {
           </div>
         )}
 
-        {/* Embedded Simulator Canvas Iframe */}
-        <div className={`w-full bg-[#FFFFFF] relative ${isFullscreen ? 'h-[calc(100vh-53px)]' : 'h-[720px] sm:h-[780px]'}`}>
+        {/* Embedded simulator canvas */}
+        <div className={`w-full bg-white relative ${isFullscreen ? 'h-[calc(100vh-53px)]' : 'h-[720px] sm:h-[780px]'}`}>
           <iframe
             key={iframeKey}
-            src="/circuitverse-simulator"
+            src={SIM_SRC}
             title="VIDS Interactive Digital Circuit Simulator"
+            onLoad={() => setLoaded(true)}
             className="w-full h-full border-none"
             allow="fullscreen; clipboard-read; clipboard-write"
           />
+          {!loaded && (
+            <div className="absolute inset-0 bg-[#FAF9F5] flex flex-col items-center justify-center gap-3 pointer-events-none">
+              <div className="w-9 h-9 rounded-full border-4 border-[#E2EBE5] border-t-[#386641] animate-spin" />
+              <p className="text-xs font-bold text-[#4B5B51]">Loading simulator…</p>
+            </div>
+          )}
         </div>
-
       </div>
 
       {/* Quick Lab Feature Cards */}

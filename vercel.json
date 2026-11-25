@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/circuitverse-simulator", "destination": "https://circuitverse.org/simulator" },
+    { "source": "/circuitverse-simulator/:path*", "destination": "https://circuitverse.org/simulator/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
